@@ -8,6 +8,7 @@ fresh clone and CI has something green to verify.
 from __future__ import annotations
 
 import json
+from dataclasses import FrozenInstanceError
 from pathlib import Path
 
 import pytest
@@ -26,7 +27,7 @@ def test_version_string() -> None:
 
 def test_default_config_is_immutable() -> None:
     # @dataclass(frozen=True) on every sub-config
-    with pytest.raises(Exception):
+    with pytest.raises(FrozenInstanceError):
         DEFAULT_CONFIG.trunk.max_tokens = 9999  # type: ignore[misc]
 
 

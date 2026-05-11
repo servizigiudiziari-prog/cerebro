@@ -19,6 +19,4 @@ def run_direct(query: str, trunk: MlxTrunk) -> ExecutionResult:
     Raises:
         NotImplementedError: tracked by issue `[Phase 0] Four execution modes`.
     """
-    raise NotImplementedError(
-        "DIRECT mode not implemented yet (see GitHub issue: execution modes)"
-    )
+    raise NotImplementedError("DIRECT mode not implemented yet (see GitHub issue: execution modes)")

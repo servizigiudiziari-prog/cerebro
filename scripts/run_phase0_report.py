@@ -28,9 +28,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
 def main(argv: list[str] | None = None) -> int:
     """Entry point. Returns an exit code (0 = success)."""
     args = parse_args(argv)
-    raise NotImplementedError(
-        f"run_phase0_report.py not implemented yet (out={args.out})"
-    )
+    raise NotImplementedError(f"run_phase0_report.py not implemented yet (out={args.out})")
 
 
 if __name__ == "__main__":

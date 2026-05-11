@@ -6,14 +6,14 @@ an architectural review (and likely Phase ≥ 1 anyway).
 
 from __future__ import annotations
 
-from enum import Enum
+from enum import StrEnum
 
 
-class ExecutionMode(str, Enum):
+class ExecutionMode(StrEnum):
     """One of four ways the orchestrator can answer a query.
 
-    Inherits from `str` so it round-trips through JSON and YAML configs
-    without extra serialization glue.
+    Subclass of `enum.StrEnum` (Python 3.11+) so it round-trips through JSON
+    and YAML configs without extra serialization glue.
 
     Members:
         DIRECT: query → trunk → output (no retrieval, no planning).

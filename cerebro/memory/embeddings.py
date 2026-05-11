@@ -40,6 +40,4 @@ class LocalEmbedder:
         Raises:
             NotImplementedError: tracked by issue `[Phase 0] LanceDB semantic memory`.
         """
-        raise NotImplementedError(
-            "embed() not implemented yet (see GitHub issue: semantic memory)"
-        )
+        raise NotImplementedError("embed() not implemented yet (see GitHub issue: semantic memory)")

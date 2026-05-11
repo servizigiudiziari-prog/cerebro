@@ -14,7 +14,6 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from pathlib import Path
 
-
 # ---------- paths ----------
 
 REPO_ROOT: Path = Path(__file__).resolve().parent.parent
@@ -24,6 +23,7 @@ RESULTS_DIR: Path = REPO_ROOT / "results"
 
 
 # ---------- trunk (LLM) ----------
+
 
 @dataclass(frozen=True)
 class TrunkConfig:
@@ -38,6 +38,7 @@ class TrunkConfig:
 
 
 # ---------- router ----------
+
 
 @dataclass(frozen=True)
 class RouterConfig:
@@ -55,6 +56,7 @@ class RouterConfig:
 
 # ---------- memory / RAG ----------
 
+
 @dataclass(frozen=True)
 class MemoryConfig:
     """LanceDB + sentence-transformers configuration for semantic recall."""
@@ -69,6 +71,7 @@ class MemoryConfig:
 
 # ---------- execution ----------
 
+
 @dataclass(frozen=True)
 class ExecutionConfig:
     """Orchestrator-level limits."""
@@ -78,6 +81,7 @@ class ExecutionConfig:
 
 
 # ---------- telemetry ----------
+
 
 @dataclass(frozen=True)
 class TelemetryConfig:
@@ -89,6 +93,7 @@ class TelemetryConfig:
 
 
 # ---------- composite ----------
+
 
 @dataclass(frozen=True)
 class CerebroConfig:

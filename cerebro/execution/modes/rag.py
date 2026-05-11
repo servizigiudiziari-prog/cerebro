@@ -21,6 +21,4 @@ def run_rag(query: str, trunk: MlxTrunk, memory: SemanticStore) -> ExecutionResu
     Raises:
         NotImplementedError: tracked by issue `[Phase 0] Four execution modes`.
     """
-    raise NotImplementedError(
-        "RAG mode not implemented yet (see GitHub issue: execution modes)"
-    )
+    raise NotImplementedError("RAG mode not implemented yet (see GitHub issue: execution modes)")
