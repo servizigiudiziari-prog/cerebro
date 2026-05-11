@@ -49,6 +49,68 @@ def test_benchmark_defaults_aligned_with_addendum_I() -> None:
     assert cfg.memory.rag_min_score == 0.5, "Addendum I §5 default rag_min_score is 0.5"
 
 
+def test_confirmed_decisions_d009_to_d019() -> None:
+    """Pin-na le 11 decisioni cumulative confermate da Antonio 2026-05-11.
+
+    Se uno di questi assert fallisce, una delle decisioni in
+    docs/phase0-design.md § D-009..D-019 è stata silenziosamente
+    rovesciata. Da fixare o aggiornare il design doc esplicitamente.
+    """
+    cfg = CerebroConfig()
+
+    # D-009: powermetrics opzione B (energy optional, default disabled).
+    assert cfg.telemetry.powermetrics_enabled is False
+
+    # D-010: router rule Alternativa B + log feature triggers.
+    assert cfg.router.rule_alternative == "B"
+    assert cfg.router.log_triggering_features is True
+
+    # D-011: Wilson 95% CI + magnitude threshold 5pp.
+    assert cfg.evaluation.statistical.confidence_level == 0.95
+    assert cfg.evaluation.statistical.magnitude_threshold_pp == 5.0
+
+    # D-012: criterio rivisto contro best_fixed.
+    f = cfg.evaluation.falsifiability
+    assert f.gain_available_significance_pp == 5.0
+    assert f.gain_ratio_success_min == 0.5
+    assert f.latency_max_ratio_vs_direct == 2.5
+    assert f.energy_max_ratio_vs_direct == 3.0
+    assert f.benchmarks_required_for_success == 3
+    assert f.require_non_mmlu_benchmark is True
+
+    # D-013: confidence prompt è SICURO/NON_SICURO (binario pre-routing).
+    assert "SICURO" in cfg.router.confidence_prompt
+    assert "NON_SICURO" in cfg.router.confidence_prompt
+
+    # D-015: critic validation soglie.
+    cv = cfg.evaluation.critic_validation
+    assert cv.gold_standard_size_initial == 30
+    assert cv.precision_min == 0.7
+    assert cv.recall_min == 0.6
+    assert cv.rubric_voices_passing_min == 3
+    assert cv.calibration_set_size == 5
+    assert cv.session_duration_minutes_max == 90
+
+    # D-016: soglie modalità individuali.
+    mf = cfg.evaluation.mode_failure
+    assert mf.rag_retrieval_precision_min == 0.3
+    assert mf.planner_solve_improvement_rate_min == 0.4
+    assert mf.critic_corrections_helpful_min == 0.5
+
+    # D-017: external models = single provider Sonnet 4.6, block at final run.
+    em = cfg.external_models
+    assert em.control_trunk_model == "claude-sonnet-4-6"
+    assert em.dataset_generator_model == "claude-sonnet-4-6"
+    assert em.judge_model == "claude-sonnet-4-6"
+    assert em.judge_temperature == 0.0
+    assert em.generation_temperature == 0.0
+    assert em.block_if_missing_at_final_run is True
+    assert em.keychain_service == "cerebro.anthropic"
+
+    # D-018: embedder backend = onnx (no torch / no sentence-transformers).
+    assert cfg.memory.embedding_backend == "onnx"
+
+
 def test_execution_mode_values() -> None:
     # exactly four modes per brief §2.1 #4
     assert len(ExecutionMode) == 4

@@ -21,16 +21,23 @@ dependencies = [
     "lancedb>=0.10",
     "pyarrow>=15.0",
 
-    # Embeddings
-    "sentence-transformers>=3.0",
+    # Embedder: ONNX Runtime + tokenizers (D-018 in
+    # docs/phase0-design.md). No `torch` come default, no
+    # `sentence-transformers`. BGE-small ONNX scaricabile da HF hub.
+    "onnxruntime>=1.18",
+    "tokenizers>=0.20",
+    "numpy>=1.26",
 
     # CLI + structured logging + config
     "typer>=0.12",
     "structlog>=24.1",
     "pyyaml>=6.0",
 
-    # HTTP for HF hub model download
+    # HTTP for HF hub model download (also scarica i file ONNX di BGE)
     "huggingface-hub>=0.24",
+
+    # External API (control trunk + dataset generator + judge, D-017)
+    "anthropic>=0.40",
 
     # Wikipedia ingestion
     "wikipedia-api>=0.7",
@@ -111,7 +118,8 @@ module = [
     "mlx.*",
     "mlx_lm.*",
     "lancedb.*",
-    "sentence_transformers.*",
+    "onnxruntime.*",
+    "tokenizers.*",
     "wikipediaapi.*",
 ]
 ignore_missing_imports = true
