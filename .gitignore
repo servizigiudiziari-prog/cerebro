@@ -27,9 +27,11 @@ uv.lock
 htmlcov/
 coverage.xml
 
-# Models & data (non versionati: troppo grossi)
-models/
-data/
+# Models & data (non versionati: troppo grossi).
+# Slash iniziale = solo le directory in root, NON le `data/` annidate
+# (es. `benchmarks/data/` contiene il seed JSON, va versionato).
+/models/
+/data/
 *.safetensors
 *.bin
 *.npz

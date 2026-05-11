@@ -1,0 +1,37 @@
+{
+  "_meta": {
+    "version": "0.0.1-bootstrap",
+    "language": "it",
+    "license": "MIT",
+    "note": "Phase-0 seed: 20 esempi hand-curated. Da espandere a 50 nell'issue `[Phase 0] Custom IT benchmark generation`.",
+    "fields": {
+      "id": "stringa univoca",
+      "question": "domanda in italiano",
+      "reference": "risposta di riferimento (non l'unica accettabile)",
+      "category": "fact | math | reasoning | code | legal | history | geography",
+      "expected_mode": "modalità che ci aspettiamo il router selezioni (informativa, non vincolante)"
+    }
+  },
+  "items": [
+    {"id": "it-001", "question": "Qual è la capitale dell'Italia?", "reference": "Roma", "category": "fact", "expected_mode": "rag"},
+    {"id": "it-002", "question": "Chi ha scritto la Divina Commedia?", "reference": "Dante Alighieri", "category": "fact", "expected_mode": "rag"},
+    {"id": "it-003", "question": "Quando è nato Leonardo da Vinci?", "reference": "15 aprile 1452", "category": "fact", "expected_mode": "rag"},
+    {"id": "it-004", "question": "Qual è la distanza in chilometri tra Roma e Milano?", "reference": "Circa 575 km in linea d'aria, circa 575-600 km su strada.", "category": "fact", "expected_mode": "rag"},
+    {"id": "it-005", "question": "Spiega in tre punti perché il cielo è blu.", "reference": "1) Diffusione di Rayleigh della luce solare nell'atmosfera. 2) Le lunghezze d'onda corte (blu) si diffondono più di quelle lunghe (rosso). 3) Il nostro occhio percepisce la luce blu diffusa da tutte le direzioni del cielo.", "category": "reasoning", "expected_mode": "planner_solve"},
+    {"id": "it-006", "question": "Risolvi: se un treno parte alle 14:20 e viaggia per 3 ore e 45 minuti, a che ora arriva?", "reference": "Alle 18:05.", "category": "math", "expected_mode": "planner_solve"},
+    {"id": "it-007", "question": "Quanto fa (12 * 7) + (45 / 9) - 3 ?", "reference": "86", "category": "math", "expected_mode": "direct"},
+    {"id": "it-008", "question": "Scrivi una funzione Python che restituisca l'n-esimo numero di Fibonacci in modo ricorsivo con memoization.", "reference": "```python\nfrom functools import lru_cache\n\n@lru_cache(maxsize=None)\ndef fib(n: int) -> int:\n    if n < 2:\n        return n\n    return fib(n-1) + fib(n-2)\n```", "category": "code", "expected_mode": "planner_solve_critic"},
+    {"id": "it-009", "question": "Che differenza c'è tra una lista e una tupla in Python?", "reference": "La lista è mutabile, la tupla è immutabile. La lista usa [], la tupla (). Le tuple sono leggermente più efficienti in memoria e si possono usare come chiavi di dizionario; le liste no.", "category": "fact", "expected_mode": "direct"},
+    {"id": "it-010", "question": "Chi era Giuseppe Garibaldi e qual è stato il suo ruolo nell'unificazione italiana?", "reference": "Generale e patriota italiano (1807-1882), figura centrale del Risorgimento. Con la Spedizione dei Mille (1860) conquistò il Regno delle Due Sicilie consegnandolo a Vittorio Emanuele II, accelerando la formazione del Regno d'Italia (1861).", "category": "history", "expected_mode": "rag"},
+    {"id": "it-011", "question": "Definizione di 'usucapione' nel diritto italiano.", "reference": "Modo di acquisto a titolo originario della proprietà o di un diritto reale mediante il possesso continuato per il tempo previsto dalla legge (artt. 1158 ss. c.c.).", "category": "legal", "expected_mode": "rag"},
+    {"id": "it-012", "question": "Qual è la differenza tra un decreto-legge e un decreto legislativo nell'ordinamento italiano?", "reference": "Il decreto-legge (art. 77 Cost.) è emanato dal Governo in casi di necessità e urgenza e perde efficacia se non convertito in legge entro 60 giorni. Il decreto legislativo (art. 76 Cost.) è emanato dal Governo previa legge-delega del Parlamento che ne fissa oggetto, principi e tempi.", "category": "legal", "expected_mode": "planner_solve"},
+    {"id": "it-013", "question": "Spiega il principio di Archimede.", "reference": "Un corpo immerso in un fluido riceve una spinta dal basso verso l'alto pari al peso del fluido spostato.", "category": "fact", "expected_mode": "direct"},
+    {"id": "it-014", "question": "Quanti gradi misura ogni angolo interno di un pentagono regolare?", "reference": "108 gradi (somma 540°, diviso 5).", "category": "math", "expected_mode": "direct"},
+    {"id": "it-015", "question": "Cosa successe il 25 aprile 1945 in Italia?", "reference": "Liberazione dal nazifascismo. L'insurrezione generale del CLNAI portò alla fine dell'occupazione tedesca e della Repubblica Sociale Italiana nell'Italia settentrionale.", "category": "history", "expected_mode": "rag"},
+    {"id": "it-016", "question": "Scrivi un breve algoritmo che, data una lista di numeri, restituisca la mediana.", "reference": "Ordinare la lista. Se la lunghezza è dispari, la mediana è l'elemento centrale. Se è pari, la mediana è la media dei due elementi centrali.", "category": "code", "expected_mode": "planner_solve"},
+    {"id": "it-017", "question": "Qual è la capitale della Sardegna?", "reference": "Cagliari", "category": "fact", "expected_mode": "rag"},
+    {"id": "it-018", "question": "Spiega in modo semplice cos'è l'entropia in termodinamica.", "reference": "Misura del disordine o, più precisamente, del numero di microstati compatibili con un dato macrostato. Nei processi spontanei in un sistema isolato l'entropia non diminuisce mai (secondo principio).", "category": "reasoning", "expected_mode": "planner_solve"},
+    {"id": "it-019", "question": "Dimostra che la somma dei primi n numeri naturali è n*(n+1)/2.", "reference": "Per induzione: caso base n=1: 1 = 1*2/2 ✓. Passo: assumendo S(n)=n(n+1)/2, S(n+1) = S(n) + (n+1) = n(n+1)/2 + (n+1) = (n+1)(n+2)/2 ✓.", "category": "reasoning", "expected_mode": "planner_solve_critic"},
+    {"id": "it-020", "question": "Quali sono i tre poteri dello Stato secondo Montesquieu?", "reference": "Legislativo, esecutivo, giudiziario.", "category": "fact", "expected_mode": "direct"}
+  ]
+}
