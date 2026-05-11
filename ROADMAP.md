@@ -52,6 +52,41 @@ e i numeri `gain_available` / `gain_ratio`. Tag `v0.1.0-phase0`.
 `router_blind` su tutti i benchmark, la **Phase 1 si ridisegna**, non
 si esegue come pianificato qui. La roadmap onora il risultato negativo.
 
+#### Strategia di implementazione: slice testabile prima del setup modelli
+
+Il brief §7.2 elenca l'ordine foundational delle issue partendo da
+Trunk MLX (#1). L'ordine **di consegna del valore** è quello. L'ordine
+**di implementazione testabile** è diverso e migliore (review esterna
+Codex 2026-05-11, registrata in `docs/reviews/`):
+
+1. **Issue #2 (router + features) prima**: implementabile senza modelli,
+   senza retrieval, senza GPU. Coverage > 70% con test puri.
+2. **Issue #4 (4 modes) contro un `FakeTrunk`**: `FakeTrunk` implementa
+   l'interfaccia `MlxTrunk.generate()` ritornando stringhe canned dal
+   test. Permette di testare orchestratore, fallback, critic loop in
+   modo deterministico senza dipendenze pesanti.
+3. **Issue #1 (trunk MLX reale)**: integrato dietro la stessa
+   interfaccia. A questo punto il sistema è osservabile end-to-end.
+4. **Issue #3 (LanceDB RAG)**: in parallelo a #1, ma il router gira già
+   senza retrieval.
+5. Il resto (#5 telemetria, #6 benchmark, #7 custom IT, #8 CLI, #9
+   docs) segue.
+
+Razionale: il rischio principale del bootstrap è "affogare nel setup
+modelli" (download Qwen, conversione MLX, ingestion Wikipedia 100k →
+ore di lavoro prima del primo segnale di vita). Iniziando da router +
+modes con `FakeTrunk`, c'è un sistema in moto già al giorno 2-3 e il
+debug iniziale si fa senza GPU. Il brief §7.3 esclude esplicitamente
+da `clarification-needed` le scelte di ordine di operazioni, quindi
+questa è una scelta del maintainer.
+
+#### Issue Phase 0 (totale 17 + 1 chiarimento, 2026-05-11)
+
+Brief base: #1-9 (foundational). Addenda I-IV: #11-#18 (extension).
+Tensioni: #10 (`torch` via `sentence-transformers`,
+`clarification-needed`). Lista completa con `gh issue list --label
+phase-0` sul repo.
+
 ### Phase 1 — Adapter e fine-tuning leggero (4-6 settimane)
 
 **Pre-requisito**: Phase 0 chiusa con esito ≠ `modalities_insufficient`,
