@@ -39,6 +39,16 @@ def test_default_config_round_trip_types() -> None:
     assert cfg.execution.critic_max_cycles == 2  # brief §2.1 #4: max 2 cycles
 
 
+def test_benchmark_defaults_aligned_with_addendum_I() -> None:
+    # Addendum I §2: rigore statistico = temperature 0.0, top_p 1.0, seed.
+    # Addendum I §5: rag_min_score default 0.5.
+    cfg = CerebroConfig()
+    assert cfg.trunk.temperature == 0.0, "Addendum I §2 requires temperature=0.0 by default"
+    assert cfg.trunk.top_p == 1.0, "Addendum I §2 requires top_p=1.0 by default"
+    assert cfg.trunk.seed > 0, "seed must be set and recorded"
+    assert cfg.memory.rag_min_score == 0.5, "Addendum I §5 default rag_min_score is 0.5"
+
+
 def test_execution_mode_values() -> None:
     # exactly four modes per brief §2.1 #4
     assert len(ExecutionMode) == 4
@@ -59,7 +69,8 @@ def test_execution_mode_is_str_enum() -> None:
 def test_execution_result_dataclass() -> None:
     r = ExecutionResult(
         output="ok",
-        mode=ExecutionMode.DIRECT,
+        selected_mode=ExecutionMode.DIRECT,
+        executed_mode=ExecutionMode.DIRECT,
         latency_ms=1.0,
         ttft_ms=0.5,
         tokens_generated=3,
@@ -67,6 +78,26 @@ def test_execution_result_dataclass() -> None:
     assert r.retrieved == []
     assert r.critic_cycles == 0
     assert r.metadata == {}
+    assert r.routing_override_reason is None
+    assert r.routing_was_overridden is False
+    # mode alias still works for back-compat
+    assert r.mode == ExecutionMode.DIRECT
+
+
+def test_execution_result_routing_override() -> None:
+    # Addendum III §2.1: selected_mode and executed_mode may differ when
+    # a runtime override fires (e.g. low_confidence_retrieval).
+    r = ExecutionResult(
+        output="answered without context",
+        selected_mode=ExecutionMode.RAG,
+        executed_mode=ExecutionMode.DIRECT,
+        routing_override_reason="low_confidence_retrieval",
+        latency_ms=1.0,
+        ttft_ms=0.5,
+        tokens_generated=3,
+    )
+    assert r.routing_was_overridden is True
+    assert r.mode == ExecutionMode.DIRECT  # alias returns executed_mode
 
 
 def test_stopwatch_measures_elapsed() -> None:

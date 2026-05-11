@@ -32,8 +32,10 @@ class TrunkConfig:
     hf_model_id: str = "Qwen/Qwen2.5-1.5B-Instruct"
     mlx_quantization: str = "q4"  # 4-bit per brief §2.1
     max_tokens: int = 512
-    temperature: float = 0.2
-    top_p: float = 0.95
+    # Addendum I §2: benchmark deve girare a temperature=0.0, top_p=1.0,
+    # seed fisso. Eccezioni esplicite e documentate.
+    temperature: float = 0.0
+    top_p: float = 1.0
     seed: int = 42
 
 
@@ -66,7 +68,11 @@ class MemoryConfig:
     embedding_model_id: str = "BAAI/bge-small-en-v1.5"
     embedding_dim: int = 384
     rag_top_k: int = 5
-    rag_min_score: float = 0.3  # below this, treat as no useful context
+    # Addendum I §5: soglia di confidence per RAG, default 0.5.
+    # Sotto soglia: low_confidence_retrieval=True e fallback a DIRECT
+    # solo per le configurazioni di routing (NON per la baseline RAG-sempre,
+    # vedi Addendum III §2.2 — asimmetria fallback).
+    rag_min_score: float = 0.5
 
 
 # ---------- execution ----------
