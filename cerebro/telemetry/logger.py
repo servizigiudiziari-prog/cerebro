@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import logging
 import sys
-from typing import Any
+from typing import Any, cast
 
 import structlog
 
@@ -64,4 +64,6 @@ def get_logger(name: str | None = None) -> structlog.stdlib.BoundLogger:
     log = structlog.get_logger()
     if name:
         log = log.bind(logger=name)
-    return log
+    # structlog.get_logger() returns a proxy typed as Any until first call;
+    # cast to the protocol we promise to callers.
+    return cast("structlog.stdlib.BoundLogger", log)
