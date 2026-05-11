@@ -1,0 +1,57 @@
+name: tests
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'docs/**'
+      - 'results/**'
+      - '**.md'
+  pull_request:
+    branches: [main]
+
+# Cancel superseded runs on the same ref. Two rapid pushes do not produce
+# two parallel runs that both bill — keeps the GitHub Actions budget tight.
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+
+# All checks in one job: GitHub Actions bills a one-minute minimum per job,
+# so multiple short jobs are wasteful. Phase 0 tests are stdlib + small
+# deps; the whole suite is well under a minute.
+#
+# Runner choice: ubuntu-latest, NOT macos. macOS runners cost ~10× more,
+# and the MLX trunk is the only Mac-only piece (its module is testable as
+# stub on Linux because top-level imports do not touch mlx). When the
+# trunk is wired up, we add a separate macos workflow_dispatch job for
+# integration tests.
+jobs:
+  ci:
+    name: ci (consolidated)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          version: "0.11.6"
+
+      - name: Set up Python
+        run: uv python install 3.12
+
+      - name: Sync dependencies (dev extras, no apple/mlx)
+        run: uv sync --extra dev
+
+      - name: Lint (ruff)
+        run: |
+          uv run ruff check .
+          uv run ruff format --check .
+
+      - name: Type check (mypy, strict on cerebro/)
+        run: uv run mypy cerebro
+
+      - name: Test (pytest)
+        run: uv run pytest -ra

@@ -1,0 +1,1 @@
+"""Heuristic router: query → ExecutionMode."""

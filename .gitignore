@@ -1,0 +1,65 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# Virtual environments
+.venv/
+venv/
+env/
+.python-version
+
+# uv
+.uv-cache/
+uv.lock
+
+# Testing & coverage
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+coverage.xml
+
+# Models & data (non versionati: troppo grossi)
+models/
+data/
+*.safetensors
+*.bin
+*.npz
+*.lance
+*.lancedb/
+
+# Results (eccetto README)
+results/*
+!results/README.md
+!results/.gitkeep
+
+# Telemetry logs locali
+logs/
+*.jsonl
+!benchmarks/data/*.jsonl
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Secrets
+.env
+.env.local
+secrets.env
+*.key
+*.pem
