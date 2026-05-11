@@ -1,9 +1,11 @@
 # Architecture — Phase 0
 
-This document is **intentionally short**. The complete architectural
-specification lives in `CEREBRO-v2-Specifica-Tecnica.md` (handed over
-separately by the project owner). Phase 0 is a subset; if a question is
-not answered here, defer to the brief `CEREBRO-Brief-Claude-Code.md`.
+This document is **intentionally short**. The authoritative material for
+Phase 0 lives in [`docs/_brief/`](_brief/) (brief base + four addenda).
+Read those **first**; if a question is not answered here, defer to them.
+The complete architectural specification (`CEREBRO-v2-Specifica-Tecnica.md`)
+mentioned in the brief base §0 has not been delivered yet; for Phase 0 we
+work strictly with `docs/_brief/`.
 
 ---
 
@@ -90,7 +92,7 @@ Phase 0, **stop and open an issue**.
 
 ## Reading order for new contributors
 
-1. `CEREBRO-Brief-Claude-Code.md` — what we are building and why
+1. [`docs/_brief/`](_brief/) — authoritative material (brief base + four addenda): what we are building, why, and how to measure it honestly
 2. `docs/phase0-design.md` — design decisions and their rationale
 3. `cerebro/config.py` — every knob lives here
 4. `cerebro/router/modes.py` + `cerebro/execution/result.py` — the data
