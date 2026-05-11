@@ -6,9 +6,14 @@
 > roadmap è **anti-iperbole**: niente promesse non difendibili, niente
 > "rivoluzione", niente date che assumono zero attriti.
 
-**Ultima revisione**: 2026-05-11
-**Stato attuale**: bootstrap repo (commit `284866a`); 9 issue Phase 0
-aperte; Fase 0 governata da `docs/_brief/` (brief base + 4 addenda).
+**Ultima revisione**: 2026-05-11 (post Codex round 2 + alignment addenda)
+**Stato attuale**: bootstrap + alignment addenda completati (HEAD `30c2435`,
+CI verde). Materiale autoritativo in `docs/_brief/` (brief base + 4
+addenda). **17 issue Phase 0 aperte** (#1–#9 foundational, #11–#18
+extension da addenda) + **2 issue `clarification-needed` bloccanti**
+(#10 torch, #19 pre-implementation decisions cumulativa). **Nessuna
+issue di implementazione va lavorata** finché #19 non chiude con risposte
+complete di Antonio (Addendum III §4, IV §6).
 
 ---
 
